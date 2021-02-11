@@ -1,0 +1,36 @@
+package com.adam.controller;
+
+import com.adam.model.CustomerPortfolio;
+import com.adam.model.Deposit;
+import com.adam.model.DepositPlan;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+public class PrintController {
+
+    public static void printCustomerPortfolios(List<CustomerPortfolio> customerPortfolios) {
+        customerPortfolios.forEach(customerPortfolio -> {
+            System.out.printf("Portfolio: %s\n", customerPortfolio.getPortfolio());
+            System.out.printf("One-time deposit plan: %d\n", customerPortfolio.getOneTimeDepositValue());
+            System.out.printf("Monthly deposit plan: %d\n", customerPortfolio.getMonthlyDepositValue());
+            System.out.printf("Current value: %d\n\n", customerPortfolio.getBalance());
+        });
+    }
+
+    public static void printDeposits(List<Deposit> deposits) {
+        System.out.printf("Deposits: %s\n\n", Arrays.toString(deposits.stream().map(Deposit::getValue).toArray()));
+    }
+
+    public static void printDepositPlan(DepositPlan depositPlan) {
+        System.out.printf("Deposit Plan: %s\n", depositPlan.getPlan());
+        depositPlan.getPortfolioValueMap().forEach(((portfolio, value) -> {
+            System.out.printf("Portfolio: %s, Value: %d\n", portfolio, value);
+        }));
+        System.out.println();
+
+    }
+}
