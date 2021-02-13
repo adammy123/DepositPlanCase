@@ -2,10 +2,8 @@ package com.adam.controller;
 
 import com.adam.model.CustomerPortfolio;
 import com.adam.model.DepositPlan;
-import com.adam.model.Portfolio;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +32,8 @@ public class PortfolioController {
                 customerPortfolios.add(customerPortfolio);
             }
         }));
+        long totalMonthly = customerPortfolios.stream().mapToLong(CustomerPortfolio::getMonthlyDepositValue).sum();
+        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setMonthlyProportion((double)customerPortfolio.getMonthlyDepositValue()/totalMonthly));
     }
 
     private static void setUpOneTimePortfolios(List<CustomerPortfolio> customerPortfolios, DepositPlan depositPlanOneTime) {
@@ -43,5 +43,7 @@ public class PortfolioController {
             customerPortfolio.setOneTimeDepositValue(value);
             customerPortfolios.add(customerPortfolio);
         }));
+        long totalOneTime = customerPortfolios.stream().mapToLong(CustomerPortfolio::getOneTimeDepositValue).sum();
+        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setOneTimeProportion((double)customerPortfolio.getOneTimeDepositValue()/totalOneTime));
     }
 }

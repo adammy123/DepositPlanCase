@@ -6,6 +6,7 @@ import com.adam.model.DepositPlan;
 import com.adam.model.Plan;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AllocationController {
 
@@ -25,6 +26,26 @@ public class AllocationController {
     }
 
     private static void allocateFund(List<CustomerPortfolio> customerPortfolios, Deposit deposit) {
-        //assume
+        if(deposit.getValue() > 0) allocateOneTimeFunds(customerPortfolios, deposit);
+        if(deposit.getValue() > 0) allocateMonthlyFunds(customerPortfolios, deposit);
+    }
+
+    private static void allocateMonthlyFunds(List<CustomerPortfolio> customerPortfolios, Deposit deposit) {
+        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setBalance(customerPortfolio.getBalance() + (long)customerPortfolio.getMonthlyProportion() * deposit.getValue()));
+    }
+
+    private static void allocateOneTimeFunds(List<CustomerPortfolio> customerPortfolios, Deposit deposit) {
+        List<CustomerPortfolio> customerPortfoliosWithOneTimeShortfall = customerPortfolios.stream().filter(customerPortfolio -> !customerPortfolio.isOneTimeDepositCompleted()).collect(Collectors.toList());
+        if(!customerPortfoliosWithOneTimeShortfall.isEmpty()) {
+            long totalOneTimeShortfall = customerPortfoliosWithOneTimeShortfall.stream().mapToLong(CustomerPortfolio::getOneTimeShortfall).sum();
+            if(deposit.getValue() >= totalOneTimeShortfall) {
+                customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio -> customerPortfolio.setBalance(customerPortfolio.getBalance() + customerPortfolio.getOneTimeDepositValue()));
+                deposit.setValue(deposit.getValue() - totalOneTimeShortfall);
+            } else {
+                //allocate one time proportionately
+                customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio -> customerPortfolio.setBalance(customerPortfolio.getBalance() + (long)customerPortfolio.getOneTimeProportion() * deposit.getValue()));
+                deposit.setValue(0);
+            }
+        }
     }
 }
