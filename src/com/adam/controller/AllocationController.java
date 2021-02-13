@@ -43,7 +43,7 @@ public class AllocationController {
                 deposit.setValue(deposit.getValue() - totalOneTimeShortfall);
             } else {
                 //allocate one time proportionately
-                customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio -> customerPortfolio.setBalance(customerPortfolio.getBalance() + (long)customerPortfolio.getOneTimeProportion() * deposit.getValue()));
+                customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio -> customerPortfolio.setBalance(customerPortfolio.getBalance() + customerPortfolio.getOneTimeProportion() * deposit.getValue()));
                 deposit.setValue(0);
             }
         }

@@ -33,7 +33,7 @@ public class PortfolioController {
             }
         }));
         long totalMonthly = customerPortfolios.stream().mapToLong(CustomerPortfolio::getMonthlyDepositValue).sum();
-        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setMonthlyProportion((double)customerPortfolio.getMonthlyDepositValue()/totalMonthly));
+        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setMonthlyProportion(customerPortfolio.getMonthlyDepositValue()/totalMonthly));
     }
 
     private static void setUpOneTimePortfolios(List<CustomerPortfolio> customerPortfolios, DepositPlan depositPlanOneTime) {
@@ -44,6 +44,6 @@ public class PortfolioController {
             customerPortfolios.add(customerPortfolio);
         }));
         long totalOneTime = customerPortfolios.stream().mapToLong(CustomerPortfolio::getOneTimeDepositValue).sum();
-        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setOneTimeProportion((double)customerPortfolio.getOneTimeDepositValue()/totalOneTime));
+        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setOneTimeProportion(customerPortfolio.getOneTimeDepositValue()/totalOneTime));
     }
 }
