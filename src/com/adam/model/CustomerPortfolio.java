@@ -6,6 +6,24 @@ public class CustomerPortfolio {
     private long balance = 0L;
     private long oneTimeDepositValue;
     private long monthlyDepositValue;
+    private long oneTimeProportion;
+    private long monthlyProportion;
+
+    public long getOneTimeProportion() {
+        return oneTimeProportion;
+    }
+
+    public void setOneTimeProportion(long oneTimeProportion) {
+        this.oneTimeProportion = oneTimeProportion;
+    }
+
+    public long getMonthlyProportion() {
+        return monthlyProportion;
+    }
+
+    public void setMonthlyProportion(long monthlyProportion) {
+        this.monthlyProportion = monthlyProportion;
+    }
 
     public CustomerPortfolio () {}
 
@@ -14,9 +32,8 @@ public class CustomerPortfolio {
         return shortfall > 0 ? shortfall : 0;
     }
 
-    public long geMonthlyShortfall () {
-        long shortfall = monthlyDepositValue + oneTimeDepositValue - balance;
-        return shortfall > 0 ? shortfall : 0;
+    public boolean isOneTimeDepositCompleted() {
+        return getOneTimeShortfall() == 0;
     }
 
     public long getOneTimeDepositValue() {
