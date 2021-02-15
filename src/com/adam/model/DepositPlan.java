@@ -1,11 +1,12 @@
 package com.adam.model;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 public class DepositPlan {
 
     private Plan plan;
-    private HashMap<Portfolio, Long> portfolioValueMap = new HashMap<>();
+    private HashMap<Portfolio, BigDecimal> portfolioValueMap = new HashMap<>();
 
     public DepositPlan() {
     }
@@ -18,11 +19,11 @@ public class DepositPlan {
         this.plan = plan;
     }
 
-    public HashMap<Portfolio, Long> getPortfolioValueMap() {
+    public HashMap<Portfolio, BigDecimal> getPortfolioValueMap() {
         return portfolioValueMap;
     }
 
-    public void addPortfolioPlan(Portfolio portfolio, long value) {
+    public void addPortfolioPlan(Portfolio portfolio, BigDecimal value) {
         this.portfolioValueMap.put(portfolio, value);
     }
 }

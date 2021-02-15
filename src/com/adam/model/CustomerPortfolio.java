@@ -1,54 +1,56 @@
 package com.adam.model;
 
+import java.math.BigDecimal;
+
 public class CustomerPortfolio {
 
     private Portfolio portfolio;
-    private long balance = 0L;
-    private long oneTimeDepositValue;
-    private long monthlyDepositValue;
-    private long oneTimeProportion;
-    private long monthlyProportion;
+    private BigDecimal balance = BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_UP);
+    private BigDecimal oneTimeDepositValue= BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_UP);
+    private BigDecimal monthlyDepositValue= BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_UP);
+    private BigDecimal oneTimeProportion= BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_UP);
+    private BigDecimal monthlyProportion= BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_UP);
 
-    public long getOneTimeProportion() {
+    public BigDecimal getOneTimeProportion() {
         return oneTimeProportion;
     }
 
-    public void setOneTimeProportion(long oneTimeProportion) {
+    public void setOneTimeProportion(BigDecimal oneTimeProportion) {
         this.oneTimeProportion = oneTimeProportion;
     }
 
-    public long getMonthlyProportion() {
+    public BigDecimal getMonthlyProportion() {
         return monthlyProportion;
     }
 
-    public void setMonthlyProportion(long monthlyProportion) {
+    public void setMonthlyProportion(BigDecimal monthlyProportion) {
         this.monthlyProportion = monthlyProportion;
     }
 
     public CustomerPortfolio () {}
 
-    public long getOneTimeShortfall () {
-        long shortfall = oneTimeDepositValue - balance;
-        return shortfall > 0 ? shortfall : 0;
+    public BigDecimal getOneTimeShortfall () {
+        BigDecimal shortfall = oneTimeDepositValue.subtract(balance);
+        return shortfall.compareTo(BigDecimal.ZERO) > 0 ? shortfall : BigDecimal.ZERO;
     }
 
     public boolean isOneTimeDepositCompleted() {
-        return getOneTimeShortfall() == 0;
+        return getOneTimeShortfall().equals(BigDecimal.ZERO);
     }
 
-    public long getOneTimeDepositValue() {
+    public BigDecimal getOneTimeDepositValue() {
         return oneTimeDepositValue;
     }
 
-    public void setOneTimeDepositValue(long oneTimeDepositValue) {
+    public void setOneTimeDepositValue(BigDecimal oneTimeDepositValue) {
         this.oneTimeDepositValue = oneTimeDepositValue;
     }
 
-    public long getMonthlyDepositValue() {
+    public BigDecimal getMonthlyDepositValue() {
         return monthlyDepositValue;
     }
 
-    public void setMonthlyDepositValue(long monthlyDepositValue) {
+    public void setMonthlyDepositValue(BigDecimal monthlyDepositValue) {
         this.monthlyDepositValue = monthlyDepositValue;
     }
 
@@ -61,11 +63,11 @@ public class CustomerPortfolio {
         this.portfolio = portfolio;
     }
 
-    public long getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }

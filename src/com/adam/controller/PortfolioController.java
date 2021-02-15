@@ -3,6 +3,8 @@ package com.adam.controller;
 import com.adam.model.CustomerPortfolio;
 import com.adam.model.DepositPlan;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +34,10 @@ public class PortfolioController {
                 customerPortfolios.add(customerPortfolio);
             }
         }));
-        long totalMonthly = customerPortfolios.stream().mapToLong(CustomerPortfolio::getMonthlyDepositValue).sum();
-        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setMonthlyProportion(customerPortfolio.getMonthlyDepositValue()/totalMonthly));
+        BigDecimal totalMonthly = customerPortfolios.stream().map(CustomerPortfolio::getMonthlyDepositValue).reduce(BigDecimal.ZERO, BigDecimal::add);
+        if(totalMonthly.compareTo(BigDecimal.ZERO) > 0) {
+            customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setMonthlyProportion(customerPortfolio.getMonthlyDepositValue().divide(totalMonthly, 2, RoundingMode.HALF_UP)));
+        };
     }
 
     private static void setUpOneTimePortfolios(List<CustomerPortfolio> customerPortfolios, DepositPlan depositPlanOneTime) {
@@ -43,7 +47,9 @@ public class PortfolioController {
             customerPortfolio.setOneTimeDepositValue(value);
             customerPortfolios.add(customerPortfolio);
         }));
-        long totalOneTime = customerPortfolios.stream().mapToLong(CustomerPortfolio::getOneTimeDepositValue).sum();
-        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setOneTimeProportion(customerPortfolio.getOneTimeDepositValue()/totalOneTime));
+        BigDecimal totalOneTime = customerPortfolios.stream().map(CustomerPortfolio::getOneTimeDepositValue).reduce(BigDecimal.ZERO, BigDecimal::add);
+        if (totalOneTime.compareTo(BigDecimal.ZERO) > 0) {
+            customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setOneTimeProportion(customerPortfolio.getOneTimeDepositValue().divide(totalOneTime, 2, RoundingMode.HALF_UP)));
+        }
     }
 }

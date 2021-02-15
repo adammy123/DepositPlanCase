@@ -1,18 +1,20 @@
 package com.adam.model;
 
+import java.math.BigDecimal;
+
 public class Deposit {
 
-    private long value;
+    private BigDecimal value;
 
-    public Deposit(long value) {
+    public Deposit(BigDecimal value) {
         this.value = value;
     }
 
-    public long getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(long value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 }
