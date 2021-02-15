@@ -14,20 +14,25 @@ deposit and don’t have to login regularly to specify the split.
 Please feel free to explore either our FAQs or our product in case you have questions about
 particular aspects of deposits at StashAway. You don’t have to replicate StashAway’s logic,
 as long as the solution you build is reasonable for the customer.
-An example
-A customer has two portfolios:
+
+Example: A customer has two portfolios:
 - High risk
 - Retirement
+
 As well as two deposit plans:
 - One time (High risk: $10,000, Retirement: $500)
 - Monthly (High risk: $0, Retirement: $100)
+
 The customer made two fund deposits:
 - First deposit: $10,500
 - Second deposit: $100
+
 The result of the fund deposit allocation should be:
 - High risk portfolio gets 10,000$
 - Retirement portfolio gets 600$
+
 Keep in mind that this is a "happy" case.
+
 Task
 Your input consists of a list of one one-time and/or one monthly deposit plan (maximum two
 deposit plans total), as well as a list of fund deposits for a particular customer. When you
