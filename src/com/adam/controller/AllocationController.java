@@ -18,10 +18,6 @@ public class AllocationController {
         if (deposit.getValue().compareTo(BigDecimal.ZERO) > 0) allocateMonthlyFunds(customerPortfolios, deposit);
     }
 
-    private static void allocateMonthlyFunds(List<CustomerPortfolio> customerPortfolios, Deposit deposit) {
-        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.setBalance(customerPortfolio.getBalance().add(customerPortfolio.getMonthlyProportion().multiply(deposit.getValue()))));
-    }
-
     private static void allocateOneTimeFunds(List<CustomerPortfolio> customerPortfolios, Deposit deposit) {
         List<CustomerPortfolio> customerPortfoliosWithOneTimeShortfall = customerPortfolios.stream().filter(customerPortfolio
                 -> !customerPortfolio.isOneTimeDepositCompleted()).collect(Collectors.toList());
@@ -29,13 +25,17 @@ public class AllocationController {
             BigDecimal totalOneTimeShortfall = customerPortfoliosWithOneTimeShortfall.stream().map(CustomerPortfolio::getOneTimeShortfall).reduce(BigDecimal.ZERO, BigDecimal::add);
             if (deposit.getValue().compareTo(totalOneTimeShortfall) >= 0) {
                 customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio ->
-                        customerPortfolio.setBalance(customerPortfolio.getBalance().add(customerPortfolio.getOneTimeDepositValue())));
-                deposit.setValue(deposit.getValue().subtract(totalOneTimeShortfall));
+                        customerPortfolio.addBalance(customerPortfolio.getOneTimeDepositValue()));
+                deposit.subtractDeposit(totalOneTimeShortfall);
             } else {
                 customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio ->
-                        customerPortfolio.setBalance(customerPortfolio.getBalance().add(customerPortfolio.getOneTimeProportion().multiply(deposit.getValue()))));
+                        customerPortfolio.addBalance(customerPortfolio.getOneTimeProportion().multiply(deposit.getValue())));
                 deposit.setValue(BigDecimal.ZERO);
             }
         }
+    }
+
+    private static void allocateMonthlyFunds(List<CustomerPortfolio> customerPortfolios, Deposit deposit) {
+        customerPortfolios.forEach(customerPortfolio -> customerPortfolio.addBalance(customerPortfolio.getMonthlyProportion().multiply(deposit.getValue())));
     }
 }

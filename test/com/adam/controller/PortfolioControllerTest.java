@@ -69,7 +69,6 @@ public class PortfolioControllerTest {
 
         CustomerPortfolio customerPortfolioHighRisk = customerPortfolios.stream().filter(customerPortfolio -> customerPortfolio.getPortfolio().equals(Portfolio.HIGH_RISK)).findFirst().get();
         Assert.assertEquals(customerPortfolioHighRisk.getOneTimeDepositValue().compareTo(oneTimeHighRisk), 0);
-        Assert.assertEquals(customerPortfolioHighRisk.getOneTimeDepositValue().compareTo(oneTimeHighRisk), 0);
     }
 
     @Test

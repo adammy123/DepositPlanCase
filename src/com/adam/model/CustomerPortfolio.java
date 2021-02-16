@@ -11,6 +11,21 @@ public class CustomerPortfolio {
     private BigDecimal oneTimeProportion= BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_UP);
     private BigDecimal monthlyProportion= BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_UP);
 
+    public CustomerPortfolio () {}
+
+    public BigDecimal getOneTimeShortfall () {
+        BigDecimal shortfall = oneTimeDepositValue.subtract(balance);
+        return shortfall.compareTo(BigDecimal.ZERO) > 0 ? shortfall : BigDecimal.ZERO;
+    }
+
+    public boolean isOneTimeDepositCompleted() {
+        return getOneTimeShortfall().equals(BigDecimal.ZERO);
+    }
+
+    public void addBalance(BigDecimal toAdd) {
+        setBalance(getBalance().add(toAdd));
+    }
+
     public BigDecimal getOneTimeProportion() {
         return oneTimeProportion;
     }
@@ -25,17 +40,6 @@ public class CustomerPortfolio {
 
     public void setMonthlyProportion(BigDecimal monthlyProportion) {
         this.monthlyProportion = monthlyProportion;
-    }
-
-    public CustomerPortfolio () {}
-
-    public BigDecimal getOneTimeShortfall () {
-        BigDecimal shortfall = oneTimeDepositValue.subtract(balance);
-        return shortfall.compareTo(BigDecimal.ZERO) > 0 ? shortfall : BigDecimal.ZERO;
-    }
-
-    public boolean isOneTimeDepositCompleted() {
-        return getOneTimeShortfall().equals(BigDecimal.ZERO);
     }
 
     public BigDecimal getOneTimeDepositValue() {
@@ -53,7 +57,6 @@ public class CustomerPortfolio {
     public void setMonthlyDepositValue(BigDecimal monthlyDepositValue) {
         this.monthlyDepositValue = monthlyDepositValue;
     }
-
 
     public Portfolio getPortfolio() {
         return portfolio;

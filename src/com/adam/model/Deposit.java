@@ -10,6 +10,10 @@ public class Deposit {
         this.value = value;
     }
 
+    public void subtractDeposit(BigDecimal toSubtract) {
+        setValue(getValue().subtract(toSubtract));
+    }
+
     public BigDecimal getValue() {
         return value;
     }
