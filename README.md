@@ -42,4 +42,5 @@ contain an absolute money amount deposited. Please build a method that can be ca
 with the described input of both one-time and monthly deposit plans as well as a list of fund
 deposits, that returns the allocation of funds amongst the customer’s portfolios. Keep in
 mind that all deposits must be distributed fully.
-Please submit your solution using https://
+Please submit your solution using https://repl.it/ in either one of the following languages:
+Python, Node.JS, Java, Scala, Go
