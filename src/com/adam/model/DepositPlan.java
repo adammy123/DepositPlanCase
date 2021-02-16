@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class DepositPlan {
 
     private Plan plan;
-    private HashMap<Portfolio, BigDecimal> portfolioValueMap = new HashMap<>();
+    private final HashMap<Portfolio, BigDecimal> portfolioValueMap = new HashMap<>();
 
     public DepositPlan() {
     }

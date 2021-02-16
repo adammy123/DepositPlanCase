@@ -2,8 +2,10 @@ package com.adam;
 
 import com.adam.model.*;
 import com.adam.controller.*;
+import com.adam.util.PrintUtil;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,13 +17,21 @@ public class Application {
         DepositPlan depositPlanMonthly = getDepositPlanMonthly();
         List<Deposit> deposits = generateDeposits();
 
-        PrintController.printDepositPlan(depositPlanOneTime);
-        PrintController.printDepositPlan(depositPlanMonthly);
-        PrintController.printDeposits(deposits);
+        PrintUtil.printDepositPlan(depositPlanOneTime);
+        PrintUtil.printDepositPlan(depositPlanMonthly);
+        PrintUtil.printDeposits(deposits);
         System.out.println("-----------------------------------\n");
 
-        List<CustomerPortfolio> customerPortfolios = ApplicationController.runApplication(Arrays.asList(depositPlanOneTime, depositPlanMonthly), deposits);
-        PrintController.printCustomerPortfolios(customerPortfolios);
+        List<CustomerPortfolio> customerPortfolios = new ArrayList<>();
+        try {
+            customerPortfolios = ApplicationController.runApplication(Arrays.asList(depositPlanOneTime, depositPlanMonthly), deposits);
+        } catch (DepositPlanCaseException e){
+            System.out.println(e.getMessage());
+            System.out.println("Please re-run application with correct values!");
+        }
+
+
+        PrintUtil.printCustomerPortfolios(customerPortfolios);
     }
 
     private static DepositPlan getDepositPlanMonthly() {

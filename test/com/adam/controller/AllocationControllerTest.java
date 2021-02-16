@@ -37,4 +37,24 @@ public class AllocationControllerTest {
         Assert.assertEquals(customerPortfolioHighRisk.getBalance().compareTo(new BigDecimal(900)),0);
         Assert.assertEquals(customerPortfolioRetirement.getBalance().compareTo(new BigDecimal(2100)), 0);
     }
+    @Test
+    public void allocateFundsTest_OneDepositLessThanTotalOneTIme() {
+        CustomerPortfolio customerPortfolioHighRisk = new CustomerPortfolio();
+        customerPortfolioHighRisk.setPortfolio(Portfolio.HIGH_RISK);
+        customerPortfolioHighRisk.setOneTimeDepositValue(new BigDecimal(400));
+        customerPortfolioHighRisk.setOneTimeProportion(new BigDecimal(".4"));
+
+        CustomerPortfolio customerPortfolioRetirement = new CustomerPortfolio();
+        customerPortfolioRetirement.setPortfolio(Portfolio.HIGH_RISK);
+        customerPortfolioRetirement.setOneTimeDepositValue(new BigDecimal(600));
+        customerPortfolioRetirement.setOneTimeProportion(new BigDecimal(".6"));
+
+        List<CustomerPortfolio> customerPortfolios = Arrays.asList(customerPortfolioHighRisk, customerPortfolioRetirement);
+        List<Deposit> deposits = Collections.singletonList(new Deposit(new BigDecimal(100)));
+
+        AllocationController.allocateFunds(customerPortfolios, deposits);
+
+        Assert.assertEquals(customerPortfolioHighRisk.getBalance().compareTo(new BigDecimal(40)),0);
+        Assert.assertEquals(customerPortfolioRetirement.getBalance().compareTo(new BigDecimal(60)), 0);
+    }
 }

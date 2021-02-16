@@ -1,2 +1,2 @@
 language = "java8"
-run = "javac -classpath .:/run_dir/junit-4.12.jar:target/dependency/* -d ./out src/com/adam/model/*.java src/com/adam/controller/*.java src/com/adam/*.java && java -classpath .:/run_dir/junit-4.12.jar:target/dependency/* com.adam.Application"
+run = "javac -classpath .:/run_dir/junit-4.12.jar:target/dependency/* -d ./out src/com/adam/model/*.java src/com/adam/controller/*.java src/com/adam/util/*.java src/com/adam/*.java && java -classpath .:/run_dir/junit-4.12.jar:target/dependency/* com.adam.Application"

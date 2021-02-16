@@ -1,4 +1,4 @@
-package com.adam.controller;
+package com.adam.util;
 
 import com.adam.model.CustomerPortfolio;
 import com.adam.model.Deposit;
@@ -8,9 +8,9 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
-public class PrintController {
+public class PrintUtil {
 
-    private static DecimalFormat df = new DecimalFormat("#,###.00");
+    private static final DecimalFormat df = new DecimalFormat("#,###.00");
 
     public static void printCustomerPortfolios(List<CustomerPortfolio> customerPortfolios) {
         customerPortfolios.forEach(customerPortfolio -> {
