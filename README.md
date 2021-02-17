@@ -1,5 +1,4 @@
 # DepositPlanCase
-Deposit Plan Case
 Background information
 At StashAway our customers can decide to open up one or multiple portfolios to save for
 different purposes (for example: a retirement portfolio and an emergency fund portfolio).
