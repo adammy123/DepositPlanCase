@@ -25,7 +25,7 @@ public class AllocationController {
             BigDecimal totalOneTimeShortfall = customerPortfoliosWithOneTimeShortfall.stream().map(CustomerPortfolio::getOneTimeShortfall).reduce(BigDecimal.ZERO, BigDecimal::add);
             if (deposit.getValue().compareTo(totalOneTimeShortfall) >= 0) {
                 customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio ->
-                        customerPortfolio.addBalance(customerPortfolio.getOneTimeDepositValue()));
+                        customerPortfolio.setBalance(customerPortfolio.getOneTimeDepositValue()));
                 deposit.subtractDeposit(totalOneTimeShortfall);
             } else {
                 customerPortfoliosWithOneTimeShortfall.forEach(customerPortfolio ->
